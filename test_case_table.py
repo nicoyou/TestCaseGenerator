@@ -45,7 +45,7 @@ class TestCaseTable(TableBase):
 
         for iy in range(len(test_list)):
             if test_list[iy][Index.type] == Type.if_and:    # if_and 条件の列があれば
-                for ix in range(len(self.table[iy]) - 1, 0, -1):
+                for ix in range(len(self.table[iy]) - 1, -1, -1):
                     if self.table[iy][ix] == define.PTN_TRUE:
                         self.clone_column(ix, ix)
                         self.table[iy][ix] = define.PTN_FALSE
