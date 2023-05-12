@@ -31,9 +31,8 @@ class TestCaseTable(TableBase):
                 elif test_list[iy][Index.type] == Type.if_and:
                     ptn_add_flag = False
                     for jx in range(len(self.table[0])):
-                        column = [temp_row[jx] for temp_row in self.table[:-1]]                                                           # 縦の一列のみ取得する
                         for if_and_key_i in range(len(test_list[iy]) - Index.param3):                                                     # 条件の数だけループする
-                            if column[self.get_index_from_key(test_list, test_list[iy][Index.param3 + if_and_key_i])] != define.PTN_TRUE: # 条件の PTN が〇かどうかをチェックする
+                            if self.get_table_row_from_key(test_list, test_list[iy][Index.param3 + if_and_key_i])[jx] != define.PTN_TRUE: # 条件の PTN が〇かどうかをチェックする
                                 break
                         else:                                                                                                             # 全ての条件がを満たしていれば
                             if ix == jx:

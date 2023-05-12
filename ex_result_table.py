@@ -27,7 +27,7 @@ class ExResultTable(TableBase):
             self.add_value_header(ex_result[ExIndex.title])
             for ix in range(len(test_case_table.table[0])):
                 for key_index in range(ExIndex.conditional_begin, len(ex_result)):
-                    if test_case_table.table[self.get_index_from_key(test_list, ex_result[key_index])][ix] != define.PTN_TRUE:
+                    if test_case_table.get_table_row_from_key(test_list, ex_result[key_index])[ix] != define.PTN_TRUE:
                         self.add_value_table(define.EX_RESULT_FALSE)
                         break
                 else:                   # 全ての条件を満たしていれば
