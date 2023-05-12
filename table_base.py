@@ -34,6 +34,15 @@ class TableBase():
             self.table[iy].insert(to_x, self.table[iy][from_x])
         return
 
+    # テストリストのデータを最適化する
+    def clean_test_list(self, test_list: test_list_t):
+        test_list_c = []
+        for row in test_list:
+            test_list_c.append(list(row))
+            if row[Index.type] == Type.reversal:
+                test_list_c[-1][Index.pk] = "!" + str(test_list_c[-1][Index.param1])
+        return test_list_c
+
     # テーブル情報を CSV 形式でテキストに出力する
     def save_csv(self, file_name: str | Path) -> None:
         file_name = define.OUT_DIR_PATH / file_name
@@ -61,7 +70,7 @@ class TableBase():
         return count
 
     # テストリストから指定されたキーの列を検索する
-    def get_data_from_key(self, test_list: test_list_t, key: key_t) -> tuple:
+    def get_data_from_key(self, test_list: test_list_t, key: key_t) -> tuple | list:
         for row in test_list:
             if row[Index.pk] == key:
                 return row
@@ -73,6 +82,17 @@ class TableBase():
             if row[Index.pk] == key:
                 return i
         return -1
+
+    # テストリストから指定されたキーに該当するテーブルの列を取得する ( ! の反転処理 )
+    def get_table_row_from_key(self, test_list: test_list_t, key: key_t) -> tuple | list:
+        for i, row in enumerate(test_list):
+            if type(key) is str and key[0] == "!":
+                if row[Index.pk] == key[1:]:
+                    return [self.word_reversal(row2) for row2 in self.table[i]]
+            else:
+                if row[Index.pk] == key:
+                    return self.table[i]
+        return ()
 
     # 特定の単語を反転する
     def word_reversal(self, word: str) -> str:

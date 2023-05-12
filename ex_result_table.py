@@ -8,6 +8,7 @@ from test_case_table import TestCaseTable
 class ExResultTable(TableBase):
     # テストケーステーブルと期待する結果から期待結果のテーブルを生成する
     def set_ex_result_list(self, test_case_table: TestCaseTable, test_list: test_list_t, ex_result_list: test_list_t, add_test_case_table: bool = False) -> None:
+        test_list = self.clean_test_list(test_list)
         if add_test_case_table:
             for iy in range(len(test_case_table.table)):
                 if len(test_case_table.header[iy]) >= 1:
