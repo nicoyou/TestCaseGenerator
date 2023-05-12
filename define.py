@@ -39,6 +39,7 @@ EX_RESULT_FALSE = ""
 DELIMITER = ", "
 REVERSAL_WORD = (
     (PTN_TRUE, PTN_FALSE),
+    (EX_RESULT_TRUE, EX_RESULT_FALSE),
     ("ON", "OFF"),
     ("TRUE", "FALSE"),
     ("True", "False"),

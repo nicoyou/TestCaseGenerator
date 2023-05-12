@@ -8,7 +8,6 @@ from define import Index, Type, key_t, test_list_t
 # テストの種類から全テストケースのテーブルを作成する
 class TableBase():
     def __init__(self) -> None:
-        self.now_normal_num: int = 0
         self.table: list[list] = [[]]
         self.header: list[list] = [[]]
 
