@@ -1,3 +1,5 @@
+from tqdm import tqdm
+
 import define
 from define import Index, Type, test_list_t
 from table_base import TableBase
@@ -10,7 +12,7 @@ class TestCaseTable(TableBase):
         now_normal_num = 0      # 現在までの Type.normal の数
         use_conditions = False  # 条件分岐を使用したかどうか ( 今後はノーマルノードが使用できなくなる )
         test_list = self.clean_test_list(test_list)
-        for iy in range(len(test_list)):
+        for iy in tqdm(range(len(test_list))):
             if test_list[iy][Index.type] == Type.normal:
                 now_normal_num += 1
                 self.add_value_header(test_list[iy][Index.param1])

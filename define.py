@@ -2,7 +2,7 @@ from enum import IntEnum, auto
 from pathlib import Path
 
 test_list_t = tuple[tuple, ...]
-key_t = int | str
+key_t = int | str | tuple
 
 
 # テストケースを作成するために登録する機能の種類
@@ -50,3 +50,4 @@ REVERSAL_WORD = (
 ERROR_MSG_NOT_FIND_KEY = "未定義のキーが指定されました"
 ERROR_MSG_CANT_USE_NORMAL = "Type.if_xxx 系が指定された後で Type.normal 系を使用することはできません"
 ERROR_MSG_NO_TYPE = "使用できない機能タイプが指定されました"
+ERROR_MSG_OR_TUPLE = "不正な OR 条件が指定されました"

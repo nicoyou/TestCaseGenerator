@@ -82,8 +82,21 @@ class TableBase():
                 return i
         raise ValueError(define.ERROR_MSG_NOT_FIND_KEY)
 
-    # テストリストから指定されたキーに該当するテーブルの列を取得する ( ! の反転処理 )
+    # テストリストから指定されたキーに該当するテーブルの列を取得する ( ! の反転処理や tuple の or 処理 )
     def get_table_row_from_key(self, test_list: test_list_t, key: key_t) -> tuple | list:
+        if type(key) is tuple:
+            result_row = None
+            for row in key:
+                if result_row is None:
+                    result_row = self.get_table_row_from_key(test_list, row)
+                else:
+                    temp_table = self.get_table_row_from_key(test_list, row)
+                    # 取得した行を OR でマージする ( どちらかの行が TRUE なら TRUE )
+                    result_row = [define.PTN_TRUE if row == define.PTN_TRUE or temp_table[i] == define.PTN_TRUE else define.PTN_FALSE for i, row in enumerate(result_row)]
+            if result_row is not None:
+                return result_row
+            raise ValueError(define.ERROR_MSG_OR_TUPLE)
+
         for i, row in enumerate(test_list):
             if type(key) is str and key[0] == "!":
                 if row[Index.pk] == key[1:]:
