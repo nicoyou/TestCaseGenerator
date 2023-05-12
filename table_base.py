@@ -73,14 +73,14 @@ class TableBase():
         for row in test_list:
             if row[Index.pk] == key:
                 return row
-        return ()
+        raise ValueError(define.ERROR_MSG_NOT_FIND_KEY)
 
     # ストリストから指定されたキーの index を取得する
     def get_index_from_key(self, test_list: test_list_t, key: key_t) -> int:
         for i, row in enumerate(test_list):
             if row[Index.pk] == key:
                 return i
-        return -1
+        raise ValueError(define.ERROR_MSG_NOT_FIND_KEY)
 
     # テストリストから指定されたキーに該当するテーブルの列を取得する ( ! の反転処理 )
     def get_table_row_from_key(self, test_list: test_list_t, key: key_t) -> tuple | list:
@@ -91,7 +91,7 @@ class TableBase():
             else:
                 if row[Index.pk] == key:
                     return self.table[i]
-        return ()
+        raise ValueError(define.ERROR_MSG_NOT_FIND_KEY)
 
     # 特定の単語を反転する
     def word_reversal(self, word: str) -> str:

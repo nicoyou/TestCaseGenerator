@@ -32,6 +32,8 @@ class TestCaseTable(TableBase):
                             self.add_value_table(define.PTN_FALSE)
                     elif test_list[iy][Index.type] == Type.reversal:                                                                      # 参照元テーブル列を反転する
                         self.add_value_table(self.word_reversal(self.get_table_row_from_key(test_list, test_list[iy][Index.param1])[ix]))
+                    else:
+                        raise ValueError(define.ERROR_MSG_NO_TYPE)
             else:
                 for ix in range(len(self.table[0])):
                     if test_list[iy][Index.type] == Type.if_and:
@@ -44,7 +46,12 @@ class TestCaseTable(TableBase):
                             ptn_add_flag = True
                         if not ptn_add_flag:
                             self.add_value_table(define.PTN_FALSE)
-                if test_list[iy][Index.type] == Type.if_and:                                                                              # if_and 条件の列があれば
+                    elif test_list[iy][Index.type] == Type.normal or test_list[iy][Index.type] == Type.reversal:
+                        raise ValueError(define.ERROR_MSG_CANT_USE_NORMAL)
+                    else:
+                        raise ValueError(define.ERROR_MSG_NO_TYPE)
+
+                if test_list[iy][Index.type] == Type.if_and:    # if_and 条件の列があれば
                     for ix in range(len(self.table[iy]) - 1, -1, -1):
                         if self.table[iy][ix] == define.PTN_TRUE:
                             self.clone_column(ix, ix)
