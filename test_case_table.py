@@ -34,10 +34,10 @@ class TestCaseTable(TableBase):
                         for if_and_key_i in range(len(test_list[iy]) - Index.param3):                                                     # 条件の数だけループする
                             if column[self.get_index_from_key(test_list, test_list[iy][Index.param3 + if_and_key_i])] != define.PTN_TRUE: # 条件の PTN が〇かどうかをチェックする
                                 break
-                            if if_and_key_i == len(test_list[iy]) - Index.param3 - 1:                                                     # 全ての条件を達していれば
-                                if ix == jx:
-                                    self.add_value_table(define.PTN_TRUE)
-                                    ptn_add_flag = True
+                        else:                                                                                                             # 全ての条件が true であれば
+                            if ix == jx:
+                                self.add_value_table(define.PTN_TRUE)
+                                ptn_add_flag = True
                     if not ptn_add_flag:
                         self.add_value_table(define.PTN_FALSE)
             self.new_line_table()

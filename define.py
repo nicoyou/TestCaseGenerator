@@ -5,6 +5,7 @@ test_list_t = tuple[tuple, ...]
 key_t = int | str
 
 
+# テストケースタプルの格納データ
 class Index(IntEnum):
     pk = 0
     type = auto()
