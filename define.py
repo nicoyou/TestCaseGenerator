@@ -19,6 +19,7 @@ class Type(IntEnum):
     if_and = auto()
 
 
+__version__ = "1.0.0"
 ENCODING = "utf-8"
 ENCODING_CSV = "shift-jis"
 OUT_DIR_PATH = Path("./out")
