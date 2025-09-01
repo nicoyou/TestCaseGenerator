@@ -1,8 +1,10 @@
 import os
 from pathlib import Path
 
-import define
-from define import Index, Type, key_t, test_list_t
+import nlib3
+
+import constants
+from constants import Index, Type, key_t, test_list_t
 
 
 # テストの種類から全テストケースのテーブルを作成する
@@ -44,19 +46,18 @@ class TableBase():
 
     # テーブル情報を CSV 形式でテキストに出力する
     def save_csv(self, file_name: str | Path) -> None:
-        file_name = define.OUT_DIR_PATH / file_name
-        encoding = define.ENCODING
-        if file_name.suffix == ".csv":
-            encoding = define.ENCODING_CSV  # csv で出力するときは Excel でバグらないようにエンコードを変更する
+        file_name = constants.OUTPUT_DIRECTORY_PATH / file_name
+        # csv で出力するときは Excel 用にエンコードを変更する
+        encoding = constants.ENCODING_CSV if file_name.suffix == ".csv" else nlib3.DEFAULT_ENCODING
 
         os.makedirs(file_name.parent, exist_ok=True)
         with open(file_name, "w", encoding=encoding) as f:
             for iy in range(len(self.table)):
                 for row in self.header[iy]:
-                    f.write(row + define.DELIMITER)
+                    f.write(row + constants.DELIMITER)
 
                 for row in self.table[iy]:
-                    f.write(row + define.DELIMITER)
+                    f.write(row + constants.DELIMITER)
                 f.write("\n")
         return
 
@@ -73,14 +74,14 @@ class TableBase():
         for row in test_list:
             if row[Index.pk] == key:
                 return row
-        raise ValueError(define.ERROR_MSG_NOT_FIND_KEY)
+        raise ValueError(constants.ERROR_MSG_NOT_FIND_KEY)
 
     # ストリストから指定されたキーの index を取得する
     def get_index_from_key(self, test_list: test_list_t, key: key_t) -> int:
         for i, row in enumerate(test_list):
             if row[Index.pk] == key:
                 return i
-        raise ValueError(define.ERROR_MSG_NOT_FIND_KEY)
+        raise ValueError(constants.ERROR_MSG_NOT_FIND_KEY)
 
     # テストリストから指定されたキーに該当するテーブルの列を取得する ( ! の反転処理や tuple の or 処理 )
     def get_table_row_from_key(self, test_list: test_list_t, key: key_t) -> tuple | list:
@@ -92,10 +93,10 @@ class TableBase():
                 else:
                     temp_table = self.get_table_row_from_key(test_list, row)
                     # 取得した行を OR でマージする ( どちらかの行が TRUE なら TRUE )
-                    result_row = [define.PTN_TRUE if row == define.PTN_TRUE or temp_table[i] == define.PTN_TRUE else define.PTN_FALSE for i, row in enumerate(result_row)]
+                    result_row = [constants.PTN_TRUE if row == constants.PTN_TRUE or temp_table[i] == constants.PTN_TRUE else constants.PTN_FALSE for i, row in enumerate(result_row)]
             if result_row is not None:
                 return result_row
-            raise ValueError(define.ERROR_MSG_OR_TUPLE)
+            raise ValueError(constants.ERROR_MSG_OR_TUPLE)
 
         for i, row in enumerate(test_list):
             if type(key) is str and key[0] == "!":
@@ -104,11 +105,11 @@ class TableBase():
             else:
                 if row[Index.pk] == key:
                     return self.table[i]
-        raise ValueError(define.ERROR_MSG_NOT_FIND_KEY)
+        raise ValueError(constants.ERROR_MSG_NOT_FIND_KEY)
 
     # 特定の単語を反転する
     def word_reversal(self, word: str) -> str:
-        for row in define.REVERSAL_WORD:
+        for row in constants.REVERSAL_WORD:
             if word == row[0]:
                 return row[1]
             if word == row[1]:

@@ -1,4 +1,4 @@
-from define import Type
+from constants import Type
 from ex_result_table import ExResultTable
 from test_case_table import TestCaseTable
 

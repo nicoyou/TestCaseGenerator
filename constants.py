@@ -28,9 +28,9 @@ class ExIndex(IntEnum):
 
 
 __version__ = "1.1.0"
-ENCODING = "utf-8"
+
 ENCODING_CSV = "shift-jis"
-OUT_DIR_PATH = Path("./out")
+OUTPUT_DIRECTORY_PATH = Path("./output")
 
 PTN_TRUE = "○"
 PTN_FALSE = "-"
