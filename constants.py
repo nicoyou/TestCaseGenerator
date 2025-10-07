@@ -29,7 +29,7 @@ class ExIndex(IntEnum):
     conditions = auto()
 
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 
 ENCODING_CSV = "shift-jis"
 OUTPUT_DIRECTORY_PATH = Path("./output")
