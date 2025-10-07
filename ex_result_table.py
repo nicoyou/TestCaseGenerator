@@ -1,5 +1,5 @@
 import constants
-from constants import ExIndex, test_list_t
+from constants import ExIndex, ex_test_list_t, test_list_t
 from table_base import TableBase
 from test_case_table import TestCaseTable
 
@@ -7,7 +7,7 @@ from test_case_table import TestCaseTable
 # 期待結果のテーブル
 class ExResultTable(TableBase):
     # テストケーステーブルと期待する結果から期待結果のテーブルを生成する
-    def set_ex_result_list(self, test_case_table: TestCaseTable, test_list: test_list_t, ex_result_list: test_list_t, add_test_case_table: bool = False) -> None:
+    def set_ex_result_list(self, test_case_table: TestCaseTable, test_list: test_list_t, ex_result_list: ex_test_list_t, add_test_case_table: bool = False) -> None:
         test_list = self.clean_test_list(test_list)
         if add_test_case_table:
             for iy in range(len(test_case_table.table)):
@@ -26,11 +26,14 @@ class ExResultTable(TableBase):
                 self.add_value_header("")
             self.add_value_header(ex_result[ExIndex.title])
             for ix in range(len(test_case_table.table[0])):
-                for key_index in range(ExIndex.conditional_begin, len(ex_result)):
-                    if test_case_table.get_table_row_from_key(test_list, ex_result[key_index])[ix] != constants.PTN_TRUE:
-                        self.add_value_table(constants.EX_RESULT_FALSE)
-                        break
-                else:                   # 全ての条件を満たしていれば
+                if len(ex_result) >= 2:
+                    for key_index in range(len(ex_result[ExIndex.conditions])):
+                        if test_case_table.get_table_row_from_key(test_list, ex_result[ExIndex.conditions][key_index])[ix] != constants.PATTERN_TRUE:
+                            self.add_value_table(constants.EX_RESULT_FALSE)
+                            break
+                    else:               # 全ての条件を満たしていれば
+                        self.add_value_table(constants.EX_RESULT_TRUE)
+                else:                   # 条件がない場合は
                     self.add_value_table(constants.EX_RESULT_TRUE)
             self.new_line_table()
         return

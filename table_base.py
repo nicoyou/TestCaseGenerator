@@ -4,7 +4,7 @@ from pathlib import Path
 import nlib3
 
 import constants
-from constants import Index, Type, key_t, test_list_t
+from constants import CaseType, Index, key_t, test_list_t
 
 
 # テストの種類から全テストケースのテーブルを作成する
@@ -40,7 +40,7 @@ class TableBase():
         test_list_c = []
         for row in test_list:
             test_list_c.append(list(row))
-            if row[Index.type] == Type.reversal:
+            if row[Index.type] == CaseType.reversal:
                 test_list_c[-1][Index.pk] = "!" + str(test_list_c[-1][Index.param1])
         return test_list_c
 
@@ -62,10 +62,10 @@ class TableBase():
         return
 
     # テストリストからノーマル列の数を取得する
-    def get_normal_num(self, test_list: test_list_t) -> int:
+    def get_normal_count(self, test_list: test_list_t) -> int:
         count = 0
         for row in test_list:
-            if row[Index.type] == Type.normal:
+            if row[Index.type] == CaseType.normal:
                 count += 1
         return count
 
@@ -93,7 +93,7 @@ class TableBase():
                 else:
                     temp_table = self.get_table_row_from_key(test_list, row)
                     # 取得した行を OR でマージする ( どちらかの行が TRUE なら TRUE )
-                    result_row = [constants.PTN_TRUE if row == constants.PTN_TRUE or temp_table[i] == constants.PTN_TRUE else constants.PTN_FALSE for i, row in enumerate(result_row)]
+                    result_row = [constants.PATTERN_TRUE if row == constants.PATTERN_TRUE or temp_table[i] == constants.PATTERN_TRUE else constants.PATTERN_FALSE for i, row in enumerate(result_row)]
             if result_row is not None:
                 return result_row
             raise ValueError(constants.ERROR_MSG_OR_TUPLE)
