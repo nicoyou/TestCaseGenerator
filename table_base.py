@@ -62,10 +62,10 @@ class TableBase():
         return
 
     # テストリストからノーマル列の数を取得する
-    def get_normal_count(self, test_list: test_list_t) -> int:
+    def get_boolean_group_count(self, test_list: test_list_t) -> int:
         count = 0
         for row in test_list:
-            if row[Index.type] == CaseType.normal:
+            if row[Index.type] == CaseType.boolean:
                 count += 1
         return count
 

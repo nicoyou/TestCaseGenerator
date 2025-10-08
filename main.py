@@ -4,11 +4,11 @@ from test_case_table import TestCaseTable
 
 if __name__ == "__main__":
     TEST_LIST = (
-        ("a", CaseType.normal, "オプション 1", "ON"),
+        ("a", CaseType.boolean, "オプション 1", "ON"),
         (None, CaseType.reversal, "a"),
-        ("b", CaseType.normal, "オプション 2", "ON"),
+        ("b", CaseType.boolean, "オプション 2", "ON"),
         (None, CaseType.reversal, "b"),
-        ("text", CaseType.normal, "", "テキスト入力あり"),
+        ("text", CaseType.boolean, "", "テキスト入力あり"),
         ("c", CaseType.if_and, "", "オプション 1 が有効、2 が無効のときのみ使用できる設定 C", "a", "!b"),
     )
 

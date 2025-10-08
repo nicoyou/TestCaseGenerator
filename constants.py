@@ -9,7 +9,7 @@ key_t = int | str | tuple
 
 # テストケースを作成するために登録する機能の種類
 class CaseType(IntEnum):
-    normal = auto()     # 倍々でテストケースが増加する機能
+    boolean = auto()    # 倍々でテストケースが増加する機能
     reversal = auto()   # 特定の機能の反対を表す
     if_and = auto()     # 特定の条件で使用できる機能 ( 必要な機能を and 条件で指定する )
 
@@ -50,6 +50,6 @@ REVERSAL_WORD = (
 )
 
 ERROR_MSG_NOT_FIND_KEY = "未定義のキーが指定されました"
-ERROR_MSG_CANT_USE_NORMAL = "Type.if_xxx 系が指定された後で Type.normal 系を使用することはできません"
+ERROR_MSG_CANT_USE_BOOLEAN = "Type.if_xxx 系が指定された後で Type.boolean 系を使用することはできません"
 ERROR_MSG_NO_TYPE = "使用できない機能タイプが指定されました"
 ERROR_MSG_OR_TUPLE = "不正な OR 条件が指定されました"

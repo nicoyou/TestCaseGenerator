@@ -9,12 +9,12 @@ from table_base import TableBase
 class TestCaseTable(TableBase):
     # テストの種類からテストケーステーブルを生成する
     def set_test_list(self, test_list: test_list_t) -> None:
-        current_normal_count = 0    # 現在までの Type.normal の数
+        current_boolean_group_count = 0     # 現在までの因子の数
         use_conditions = False      # 条件分岐を使用したかどうか ( 今後はノーマルノードが使用できなくなる )
         test_list = self.clean_test_list(test_list)
         for iy in tqdm(range(len(test_list))):
-            if test_list[iy][Index.type] == CaseType.normal:
-                current_normal_count += 1
+            if test_list[iy][Index.type] == CaseType.boolean:
+                current_boolean_group_count += 1
                 self.add_value_header(test_list[iy][Index.param1])
                 self.add_value_header(test_list[iy][Index.param2])
             elif test_list[iy][Index.type] == CaseType.reversal:
@@ -26,9 +26,9 @@ class TestCaseTable(TableBase):
                 self.add_value_header(test_list[iy][Index.param2])
 
             if not use_conditions:
-                for ix in range(2**self.get_normal_count(test_list)):
-                    if test_list[iy][Index.type] == CaseType.normal:
-                        if (ix // (2**self.get_normal_count(test_list) / (2**current_normal_count))) % 2 == 0:
+                for ix in range(2**self.get_boolean_group_count(test_list)):
+                    if test_list[iy][Index.type] == CaseType.boolean:
+                        if (ix // (2**self.get_boolean_group_count(test_list) / (2**current_boolean_group_count))) % 2 == 0:
                             self.add_value_table(constants.PATTERN_TRUE)
                         else:
                             self.add_value_table(constants.PATTERN_FALSE)
@@ -48,8 +48,8 @@ class TestCaseTable(TableBase):
                             is_pattern_additional = True
                         if not is_pattern_additional:
                             self.add_value_table(constants.PATTERN_FALSE)
-                    elif test_list[iy][Index.type] == CaseType.normal or test_list[iy][Index.type] == CaseType.reversal:
-                        raise ValueError(constants.ERROR_MSG_CANT_USE_NORMAL)
+                    elif test_list[iy][Index.type] == CaseType.boolean or test_list[iy][Index.type] == CaseType.reversal:
+                        raise ValueError(constants.ERROR_MSG_CANT_USE_BOOLEAN)
                     else:
                         raise ValueError(constants.ERROR_MSG_NO_TYPE)
 
