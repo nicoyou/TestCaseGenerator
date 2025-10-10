@@ -9,8 +9,9 @@ key_t = int | str | tuple
 
 # テストケースを作成するために登録する機能の種類
 class CaseType(IntEnum):
-    boolean = auto()    # 倍々でテストケースが増加する機能
-    reversal = auto()   # 特定の機能の反対を表す
+    boolean = auto()    # 2 つの水準をもつ因子 ( 倍々でテストケースが増加する )
+    reversal = auto()   # 特定の水準の反対
+    group = auto()      # 一つの因子に 3 つ以上の水準がある場合
     if_and = auto()     # 特定の条件で使用できる機能 ( 必要な機能を and 条件で指定する )
 
 
